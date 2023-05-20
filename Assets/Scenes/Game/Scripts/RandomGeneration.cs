@@ -24,7 +24,7 @@ public class RandomGeneration2 : MonoBehaviour
     {
         int rand = Random.Range(0, objects.Length);
         var cell = Instantiate(objects[rand], transform.position, Quaternion.identity);
-        cell.transform.position = new Vector3(Random.Range(minRange, maxRange), Random.Range(minRange, maxRange), transform.position.z);
+        cell.transform.position = new Vector3(Random.Range(minRange - 5, maxRange + 5), Random.Range(minRange, maxRange), transform.position.z);
 
     }
 }
