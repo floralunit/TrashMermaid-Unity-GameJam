@@ -23,7 +23,7 @@ public class TrashFishBehaviour : MonoBehaviour
 
     private string CurrentAnimaton;
 
-    public float maxDistanceAudio = 15f;
+    private float maxDistanceAudio = 11f;
 
     private AudioSource audioSource;
 
@@ -57,9 +57,9 @@ public class TrashFishBehaviour : MonoBehaviour
         float distance = Vector3.Distance(transform.position, MermaidMovement.Instance.gameObject.transform.position);
         float volume = 0f;
 
-        if (distance <= maxDistance)
+        if (distance <= maxDistanceAudio)
         {
-            volume = Mathf.InverseLerp(maxDistance, 0f, distance);
+            volume = Mathf.InverseLerp(maxDistanceAudio, 0f, distance);
         }
 
         audioSource.volume = volume;
