@@ -40,7 +40,9 @@ public class TrashItemScript : MonoBehaviour
 
     void PickUp()
     {
-        Destroy(gameObject);
+        MermaidMovement.Instance.hasTrash = true;
+        MermaidMovement.Instance.trash = this.gameObject;
+        this.gameObject.SetActive(false);
     }
 
 
@@ -71,11 +73,10 @@ public class TrashItemScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Mermaid")
+        if (collision.gameObject.tag == "Mermaid" && !MermaidMovement.Instance.hasTrash)
         {
-            // TrashTextScript.TrashItem += 1;
-
             PickUpText.Instance.gameObject.SetActive(true);
+            PickUpText.Instance.text.text = "Нажмите E, чтобы подобрать!";
             pickUpAllowed = true;
         }
     }

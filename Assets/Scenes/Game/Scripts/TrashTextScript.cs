@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TrashTextScript : MonoBehaviour
 {
-    public static int TrashItem;
+    public static int TrashItemCount = 10;
     Text text;
     void Start()
     {
@@ -14,6 +14,6 @@ public class TrashTextScript : MonoBehaviour
 
     void Update()
     {
-        text.text = TrashItem.ToString();
+        text.text = $"Осталось {TrashItemCount} мусора";
     }
 }

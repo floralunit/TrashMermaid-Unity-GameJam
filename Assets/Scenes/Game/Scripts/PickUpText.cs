@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PickUpText : MonoBehaviour
 {
-    //Text text;
+    public Text text;
 
     public static PickUpText Instance;
 
@@ -15,7 +15,7 @@ public class PickUpText : MonoBehaviour
     }
     void Start()
     {
-        //text = GetComponent<Text>();
+        text = GetComponent<Text>();
     }
 
     void Update()
