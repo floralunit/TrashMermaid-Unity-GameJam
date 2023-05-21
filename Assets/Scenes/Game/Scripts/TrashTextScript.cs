@@ -10,6 +10,7 @@ public class TrashTextScript : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
+        TrashItemCount = 0;
     }
 
     void Update()
