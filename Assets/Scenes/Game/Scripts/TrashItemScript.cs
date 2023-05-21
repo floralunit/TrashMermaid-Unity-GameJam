@@ -32,7 +32,8 @@ public class TrashItemScript : MonoBehaviour
             SetNewDestination();
         }
 
-        if (pickUpAllowed && Input.GetKeyDown(KeyCode.E)){
+        if (pickUpAllowed && Input.GetKeyDown(KeyCode.E) && MermaidMovement.Instance.trash == null)
+        {
             PickUp();
         }
 
