@@ -26,7 +26,9 @@ public class TimerScript : MonoBehaviour
 
         if (currentTime <= 0)
         {
-            //GameManagerScript.Instance.GameOver(false, "Закончился таймер!");
+            var changeScene = new SceneChanger();
+
+            changeScene.ChangeScene("GameOver");
         }
     }
 }

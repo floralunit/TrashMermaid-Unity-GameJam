@@ -23,6 +23,10 @@ public class TrashFishBehaviour : MonoBehaviour
 
     private string CurrentAnimaton;
 
+    public float maxDistanceAudio = 15f;
+
+    private AudioSource audioSource;
+
     public static TrashFishBehaviour Instance;
 
     private void Awake()
@@ -31,6 +35,7 @@ public class TrashFishBehaviour : MonoBehaviour
     }
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         origPos = transform.position;
         SetNewDestination();
         targetPos = wayPoint;
@@ -49,6 +54,16 @@ public class TrashFishBehaviour : MonoBehaviour
 
     void Update()
     {
+        float distance = Vector3.Distance(transform.position, MermaidMovement.Instance.gameObject.transform.position);
+        float volume = 0f;
+
+        if (distance <= maxDistance)
+        {
+            volume = Mathf.InverseLerp(maxDistance, 0f, distance);
+        }
+
+        audioSource.volume = volume;
+
         if (Input.GetKeyDown(KeyCode.F) && !isEating && canEat)
         {
            _captcha.gameObject.SetActive(true);
@@ -93,7 +108,7 @@ public class TrashFishBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Mermaid" && MermaidMovement.Instance.hasTrash && !isEating)
         {
             PickUpText.Instance.gameObject.SetActive(true);
-            PickUpText.Instance.text.text = "Нажмите F, чтобы отдать мусор треш рыбе!";
+            PickUpText.Instance.text.text = "Нажмите F, чтобы скормить мусор Треш-рыбе!";
             canEat = true;
         }
     }
@@ -120,7 +135,7 @@ public class TrashFishBehaviour : MonoBehaviour
         yield return new WaitForSeconds(10f);
         isEating = false;
         wayPoint = transform.position;
-        TrashTextScript.TrashItemCount -= 1;
+        TrashTextScript.TrashItemCount++;
         canMove = true;
     }
 
