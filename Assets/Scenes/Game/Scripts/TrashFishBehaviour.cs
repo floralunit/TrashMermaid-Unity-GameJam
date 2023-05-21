@@ -9,6 +9,7 @@ public class TrashFishBehaviour : MonoBehaviour
     float range;
     [SerializeField]
     float maxDistance;
+    [SerializeField] private GameObject _captcha;
 
     public float speed = 2f;
 
@@ -18,8 +19,16 @@ public class TrashFishBehaviour : MonoBehaviour
     private Vector2 origPos, targetPos;
     private bool isEating;
     private bool canEat;
+    private bool canMove;
 
     private string CurrentAnimaton;
+
+    public static TrashFishBehaviour Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         origPos = transform.position;
@@ -35,16 +44,18 @@ public class TrashFishBehaviour : MonoBehaviour
         }
         isEating = false;
         canEat = false;
+        canMove = true;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && !isEating && canEat)
         {
-            StartCoroutine(Eating());
+           _captcha.gameObject.SetActive(true);
+            canMove = false;
         }
 
-        if (isEating == false)
+        if (isEating == false && canMove)
         {
             transform.position = Vector2.MoveTowards(transform.position, wayPoint, speed * Time.deltaTime);
 
@@ -81,8 +92,6 @@ public class TrashFishBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Mermaid" && MermaidMovement.Instance.hasTrash && !isEating)
         {
-            // TrashTextScript.TrashItem += 1;
-
             PickUpText.Instance.gameObject.SetActive(true);
             PickUpText.Instance.text.text = "Нажмите F, чтобы отдать мусор треш рыбе!";
             canEat = true;
@@ -97,6 +106,11 @@ public class TrashFishBehaviour : MonoBehaviour
             canEat = false;
         }
     }
+
+    public void StartEating()
+    {
+        StartCoroutine(Eating());
+    }
     public IEnumerator Eating()
     {
         isEating = true;
@@ -107,6 +121,7 @@ public class TrashFishBehaviour : MonoBehaviour
         isEating = false;
         wayPoint = transform.position;
         TrashTextScript.TrashItemCount -= 1;
+        canMove = true;
     }
 
     void ChangeAnimation(string animation)
